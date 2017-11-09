@@ -33,6 +33,7 @@ esac
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
+alias vi='vim'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
