@@ -29,6 +29,7 @@ fi
 if [ ! -f $HOME/.bash_login ]; then
     echo "source /usr/local/bin/virtualenvwrapper.sh" >> $HOME/.bash_login
 fi
+source /usr/local/bin/virtualenvwrapper.sh
 
 # Instal ag
 brew install the_silver_searcher
