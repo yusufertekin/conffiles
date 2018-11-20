@@ -7,19 +7,19 @@ xcode-select --install
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # export the path
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/python@2/libexec/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 
-# Install Python and link it to usr/local/bin
+# Install Python3 and Python2 
 brew install python 
-brew link --overwrite python
+brew install python@2
 
 brew install vim
 
-# Install PIP
-sudo easy_install pip 
+# Setup vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Install Virtualenv
-sudo pip install virtualenv virtualenvwrapper
+pip install virtualenv virtualenvwrapper
 
 # Create a folder for virtualenvs
 if [ ! -d "$HOME/.virtualenvs" ]; then
@@ -32,10 +32,3 @@ fi
 
 # Instal ag
 brew install the_silver_searcher
-
-# Setup vundle
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-# Place the conf files
-git clone git@github.com:yusufertekin/conffiles.git && mv conffiles/* ~
-
