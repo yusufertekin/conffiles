@@ -12,10 +12,14 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'nvie/vim-flake8'
+Plugin 'posva/vim-vue'
+Plugin 'ajh17/VimCompletesMe'
+
 
 call vundle#end()         
 filetype plugin indent on
@@ -41,21 +45,38 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
+    \ set textwidth=120 |
     \ set expandtab |
-    \ set autoindent |
     \ set fileformat=unix
 
-au BufNewFile,BufRead *.js, *.html, *.css
+au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.yml,*.yaml
     \ set tabstop=2 |
     \ set softtabstop=2 |
-    \ set shiftwidth=2
+    \ set shiftwidth=2 |
+    \ set expandtab
 
-" Turn of autocomplete jedi
+au BufNewFile,BufRead *.vue
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+    \ set expandtab
+
+" Flake check key remap to leader + c 
+" Move to next error ctrl + x
+" Move to previous error ctrl + z
+
+nnoremap <leader>c :call Flake8()<CR>
+autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
+map <C-x> :cn<CR>
+map <C-z> :cp<CR>
+
+" Turn off autocomplete jedi
 let g:jedi#completions_enabled = 0
+" Disable call signatures on insert mode
+let g:jedi#show_call_signatures = "0"
 
 " Remove trailing whitespace
-autocmd BufWritePre *.py :%s/\s\+$//e
+"autocmd BufWritePre *.py :%s/\s\+$//e
 
 set number
 set relativenumber
@@ -89,4 +110,9 @@ set clipboard=unnamed
 " Nerd tree shortcut Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
 
+" Backspace problem
+set backspace=indent,eol,start
+
 syntax enable
+" Disable bip sound
+set noeb vb t_vb=

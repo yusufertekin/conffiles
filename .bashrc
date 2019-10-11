@@ -17,9 +17,7 @@ HISTFILESIZE=4000
 shopt -s checkwinsize
 
 export PROMPT_COMMAND='history -a'
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-PYTHONPATH=/usr/local/bin/python2.7:$PYTHONPATH
-
+PATH=/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/python@2/libexec/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -30,10 +28,20 @@ case "$TERM" in
 esac
 
 # some more ls aliases
+#alias ls='LSCOLORS=gxfxcxdxbxexexabagacad /bin/ls -bFHGLOPW'
 alias ll='ls -l'
-alias la='ls -A'
+alias la='ls -GFlash'
 alias l='ls -CF'
 alias vi='vim'
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -51,10 +59,17 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
-# Better prompt with username and git branch
+# Better prompt with username and git branch and dirty state
+
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo "*"
+}
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
 export PS1='\[\033[01;32m\]\u\[\033[01;34m\] \w\[\033[01;33m\]$(parse_git_branch)\[\033[01;34m\] \$\[\033[00m\] '
-export GIT_PS1_SHOWDIRTYSTATE=1
 
 set -o vi
 set editing-mode vi
 alias ctags='/usr/local/bin/ctags'
+alias cports='sudo lsof -i -n -P | grep TCP'
