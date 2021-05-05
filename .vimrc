@@ -1,3 +1,4 @@
+syntax on
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -10,16 +11,19 @@ Plugin 'VundleVim/Vundle.vim'
 
 " The bundles you install will be listed here
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'nvie/vim-flake8'
-Plugin 'posva/vim-vue'
 Plugin 'ajh17/VimCompletesMe'
-
+Plugin 'https://github.com/shmargum/vim-sass-colors.git'
+Plugin 'psf/black'
+Plugin 'prettier/vim-prettier'
+Plugin 'posva/vim-vue'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'rakr/vim-one'
 
 call vundle#end()         
 filetype plugin indent on
@@ -33,7 +37,7 @@ set guifont=Inconsolata\ for\ Powerline:h15
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
-"set fillchars+=stl:\ ,stlnc:\
+set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
 set laststatus=2
@@ -45,21 +49,31 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=120 |
     \ set expandtab |
     \ set fileformat=unix
 
-au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.yml,*.yaml
+au BufNewFile,BufRead *.js
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
-    \ set expandtab
+    \ set expandtab |
+    \ set autoindent
+
+au BufNewFile,BufRead *.html
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+    \ set expandtab |
+    \ set autoindent
 
 au BufNewFile,BufRead *.vue
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
     \ set expandtab
+
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
 
 " Flake check key remap to leader + c 
 " Move to next error ctrl + x
@@ -116,3 +130,15 @@ set backspace=indent,eol,start
 syntax enable
 " Disable bip sound
 set noeb vb t_vb=
+
+" vim-javascript code folding
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
+
+colorscheme one
+set background=dark
+
+" Autocomplete Highlight Color
+highlight Pmenu ctermbg=red guibg=red

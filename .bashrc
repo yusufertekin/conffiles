@@ -17,7 +17,6 @@ HISTFILESIZE=4000
 shopt -s checkwinsize
 
 export PROMPT_COMMAND='history -a'
-PATH=/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/python@2/libexec/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -28,10 +27,11 @@ case "$TERM" in
 esac
 
 # some more ls aliases
-#alias ls='LSCOLORS=gxfxcxdxbxexexabagacad /bin/ls -bFHGLOPW'
+# alias ls='LSCOLORS=gxfxcxdxbxexexabagacad /bin/ls -bFHGLOPW'
 alias ll='ls -l'
 alias la='ls -GFlash'
 alias l='ls -CF'
+alias vim='/usr/local/bin/vim'
 alias vi='vim'
 
 # enable color support of ls and also add handy aliases
@@ -73,3 +73,5 @@ set -o vi
 set editing-mode vi
 alias ctags='/usr/local/bin/ctags'
 alias cports='sudo lsof -i -n -P | grep TCP'
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
